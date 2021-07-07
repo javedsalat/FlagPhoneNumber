@@ -15,7 +15,7 @@ open class FPNTextField: UITextField {
             layoutIfNeeded()
         }
     }
-    
+    public weak var fpnDelegate: FPNTextFieldDelegate?
     private var flagWidthConstraint: NSLayoutConstraint?
     private var flagHeightConstraint: NSLayoutConstraint?
     
@@ -80,7 +80,7 @@ open class FPNTextField: UITextField {
     
     init() {
         super.init(frame: .zero)
-        
+        self.delegate = self
         setup()
     }
     
@@ -227,7 +227,7 @@ open class FPNTextField: UITextField {
                 pickerView.setCountry(firstCountry.code)
             }
         case .list:
-            (delegate as? FPNTextFieldDelegate)?.fpnDisplayCountryList!()
+            fpnDelegate?.fpnDisplayCountryList!()
         }
     }
     
@@ -239,7 +239,7 @@ open class FPNTextField: UITextField {
     }
     
     private func fpnDidSelect(country: FPNCountry) {
-        (delegate as? FPNTextFieldDelegate)?.fpnDidSelectCountry!(name: country.name, dialCode: country.phoneCode, code: country.code.rawValue)
+        fpnDelegate?.fpnDidSelectCountry!(name: country.name, dialCode: country.phoneCode, code: country.code.rawValue)
         selectedCountry = country
     }
     
@@ -359,7 +359,7 @@ open class FPNTextField: UITextField {
                 if let inputString = formatter?.inputString(cleanedPhoneNumber) {
                     text = remove(dialCode: phoneCode, in: inputString)
                 }
-                (delegate as? FPNTextFieldDelegate)?.fpnDidValidatePhoneNumber!(textField: self, isValid: true)
+                fpnDelegate?.fpnDidValidatePhoneNumber!(textField: self, isValid: true)
             } else {
                 nbPhoneNumber = nil
                 
@@ -368,7 +368,7 @@ open class FPNTextField: UITextField {
                         text = remove(dialCode: dialCode, in: inputString)
                     }
                 }
-                (delegate as? FPNTextFieldDelegate)?.fpnDidValidatePhoneNumber!(textField: self, isValid: false)
+                fpnDelegate?.fpnDidValidatePhoneNumber!(textField: self, isValid: false)
             }
         }
     }
@@ -509,5 +509,17 @@ extension FPNTextField {
     @objc func doneButtonAction()
     {
         self.resignFirstResponder()
+    }
+}
+
+extension FPNTextField: UITextFieldDelegate {
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let textFieldText = textField.text,
+            let rangeOfTextToReplace = Range(range, in: textFieldText) else {
+                return false
+        }
+        let substringToReplace = textFieldText[rangeOfTextToReplace]
+        let count = textFieldText.count - substringToReplace.count + string.count
+        return count <= 12
     }
 }
