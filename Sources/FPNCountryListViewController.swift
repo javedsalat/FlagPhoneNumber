@@ -21,7 +21,7 @@ open class FPNCountryListViewController: UITableViewController, UISearchResultsU
 		super.viewDidLoad()
 
 		tableView.tableFooterView = UIView()
-        self.navigationController?.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismissController))
+        
 		initSearchBarController()
 	}
 
@@ -45,6 +45,7 @@ open class FPNCountryListViewController: UITableViewController, UISearchResultsU
 		if #available(iOS 11.0, *) {
 			navigationItem.searchController = searchController
 			navigationItem.hidesSearchBarWhenScrolling = false
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismissController))
 		} else {
 			searchController.dimsBackgroundDuringPresentation = false
 			searchController.hidesNavigationBarDuringPresentation = true
