@@ -21,10 +21,13 @@ open class FPNCountryListViewController: UITableViewController, UISearchResultsU
 		super.viewDidLoad()
 
 		tableView.tableFooterView = UIView()
-
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismissController))
 		initSearchBarController()
 	}
 
+    @objc func dismissController(){
+        self.dismiss(animated:true , completion: nil)
+    }
 	open func setup(repository: FPNCountryRepository) {
 		self.repository = repository
 	}

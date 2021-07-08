@@ -461,7 +461,7 @@ open class FPNTextField: UITextField {
     }
     
     private func updatePlaceholder() {
-        if let countryCode = selectedCountry?.code {
+       /* if let countryCode = selectedCountry?.code {
             do {
                 let example = try phoneUtil.getExampleNumber(countryCode.rawValue)
                 let phoneNumber = "+\(example.countryCode.stringValue)\(example.nationalNumber.stringValue)"
@@ -471,12 +471,14 @@ open class FPNTextField: UITextField {
                 } else {
                     placeholder = nil
                 }
+                placeholder = nil
             } catch _ {
                 placeholder = nil
             }
         } else {
             placeholder = nil
-        }
+        }*/
+        placeholder = nil
     }
 }
 extension FPNTextField {
