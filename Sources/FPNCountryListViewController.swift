@@ -21,7 +21,7 @@ open class FPNCountryListViewController: UITableViewController, UISearchResultsU
 		super.viewDidLoad()
 
 		tableView.tableFooterView = UIView()
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismissController))
+        self.navigationController?.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismissController))
 		initSearchBarController()
 	}
 
