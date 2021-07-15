@@ -10,7 +10,7 @@ import UIKit
 
 @objc
 public protocol FPNTextFieldDelegate: class {
-	@objc optional func fpnDidSelectCountry(name: String, dialCode: String, code: String)
+	@objc optional func fpnDidSelectCountry(name: String, dialCode: String, code: String, textField: FPNTextField)
     @objc optional func fpnDidValidatePhoneNumber(textField: FPNTextField, isValid: Bool)
     @objc optional func fpnDisplayCountryList()
 }
