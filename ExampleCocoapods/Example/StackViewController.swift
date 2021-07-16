@@ -20,7 +20,7 @@ class StackViewController: UIViewController {
 		view.backgroundColor = UIColor.groupTableViewBackground
 
 		phoneNumberTextField.displayMode = .picker
-		phoneNumberTextField.delegate = self
+		phoneNumberTextField.fpnDelegate = self
 	}
 
 }

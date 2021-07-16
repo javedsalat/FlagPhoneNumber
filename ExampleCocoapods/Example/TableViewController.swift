@@ -24,10 +24,10 @@ class TableViewController: UITableViewController {
 		tableView.delaysContentTouches = false
 
 		firstPhoneNumberTextField.displayMode = .picker
-		firstPhoneNumberTextField.delegate = self
+		firstPhoneNumberTextField.fpnDelegate = self
 
 		secondPhoneNumberTextField.displayMode = .list
-		secondPhoneNumberTextField.delegate = self
+		secondPhoneNumberTextField.fpnDelegate = self
 
 		listController.setup(repository: secondPhoneNumberTextField.countryRepository)
 

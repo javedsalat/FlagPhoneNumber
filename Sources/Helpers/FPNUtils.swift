@@ -8,6 +8,7 @@
 import Foundation
 
 open class FPNUtils {
+    
 
 	open class func getCurrentCountry() -> FPNCountry? {
 		let repository = FPNCountryRepository()
@@ -18,4 +19,8 @@ open class FPNUtils {
 		}
 		return nil
 	}
+    
+    
+    
+    
 }

@@ -9,6 +9,40 @@
 import UIKit
 import FlagPhoneNumber
 
+private var phoneUtil: NBPhoneNumberUtil = NBPhoneNumberUtil()
+
+extension String {
+    
+    func getNewFormattedPhoneNumber(format: FPNFormat) -> String? {
+        
+        let cleanedPhoneNumber: String = clean(string: self)
+        
+        if let validPhoneNumber = getValidNumber(phoneNumber: cleanedPhoneNumber) {
+            let newTemp = try? phoneUtil.format(validPhoneNumber, numberFormat: .INTERNATIONAL)
+            print(newTemp!)
+        }
+        
+        return ""
+    }
+    
+    func clean(string: String) -> String {
+        var allowedCharactersSet = CharacterSet.decimalDigits
+        allowedCharactersSet.insert("+")
+        return string.components(separatedBy: allowedCharactersSet.inverted).joined(separator: "")
+    }
+    
+    func getValidNumber(phoneNumber: String) -> NBPhoneNumber? {
+        let countryCode = FPNCountryCode.US
+        do {
+            let parsedPhoneNumber: NBPhoneNumber = try phoneUtil.parse(phoneNumber, defaultRegion: countryCode.rawValue)
+            let isValid = phoneUtil.isValidNumber(parsedPhoneNumber)
+            return isValid ? parsedPhoneNumber : nil
+        } catch _ {
+            return nil
+        }
+    }
+}
+
 class SimpleViewController: UIViewController {
 
 	@IBOutlet weak var phoneNumberTextField: FPNTextField!
@@ -18,6 +52,9 @@ class SimpleViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+        let str = "+919979306224"
+        str.getNewFormattedPhoneNumber(format: .International)
+        
 		title = "In Simple View"
 
 		view.backgroundColor = UIColor.groupTableViewBackground
@@ -35,7 +72,7 @@ class SimpleViewController: UIViewController {
 			self?.phoneNumberTextField.setFlag(countryCode: country.code)
 		}
 
-		phoneNumberTextField.delegate = self
+		phoneNumberTextField.fpnDelegate = self
 		phoneNumberTextField.font = UIFont.systemFont(ofSize: 14)
 
 		// Custom the size/edgeInsets of the flag button
@@ -64,7 +101,8 @@ class SimpleViewController: UIViewController {
 		phoneNumberTextField.setFlag(countryCode: .FR)
 
 		// Set the phone number directly
-		phoneNumberTextField.set(phoneNumber: "+33612345678")
+//		phoneNumberTextField.set(phoneNumber: "+33612345678")
+        phoneNumberTextField.setFormatted(phoneNumber: "+919979306224")
 
 		view.addSubview(phoneNumberTextField)
 

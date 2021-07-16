@@ -281,6 +281,19 @@ open class FPNTextField: UITextField {
         }
     }
     
+    @objc open func setFormatted(phoneNumber: String) {
+        let cleanedPhoneNumber: String = clean(string: phoneNumber)
+        
+        if let validPhoneNumber = getValidNumber(phoneNumber: cleanedPhoneNumber) {
+            if validPhoneNumber.italianLeadingZero {
+                text = "0\(validPhoneNumber.nationalNumber.stringValue)"
+            } else {
+                text = validPhoneNumber.nationalNumber.stringValue
+            }
+            setFlag(countryCode: FPNCountryCode(rawValue: phoneUtil.getRegionCode(for: validPhoneNumber))!)
+        }
+    }
+    
     /// Set the country image according to country code. Example "FR"
     open func setFlag(countryCode: FPNCountryCode) {
         let countries = countryRepository.countries

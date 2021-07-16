@@ -23,7 +23,7 @@ class ScrollViewController: UIViewController {
 		scrollView.delaysContentTouches = false
 
 		phoneNumberTextField.displayMode = .picker
-		phoneNumberTextField.delegate = self
+		phoneNumberTextField.fpnDelegate = self
 	}
 }
 
