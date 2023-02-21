@@ -28,11 +28,12 @@ Pod::Spec.new do |s|
 
 	s.ios.deployment_target = '11.0'
 	s.source_files = 'Sources/**/*.swift'
-	s.resources = 'Sources/Resources/**'
+	#s.resource_bundles = {'FlagPhoneNumber' => ['Sources/Resources/**/*']}
+ 	s.resources = 'Sources/Resources/**'
 	s.swift_version = '5.0'
 	s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
 
 	s.subspec 'libPhoneNumberiOS' do |ss|
-		ss.source_files = 'Sources/libPhoneNumber/**/*.{m,h}'
+	ss.source_files = 'Sources/libPhoneNumber/**/*.{m,h}'
 	end
 end
